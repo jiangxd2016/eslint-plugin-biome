@@ -93,8 +93,7 @@ const eslintPluginBiome = {
 					},
 				};
 			},
-		};
-
+		}
   },
 };
 module.exports = eslintPluginBiome;
