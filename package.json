@@ -5,13 +5,6 @@
 	"description": "",
 	"author": "jiangxd <jiangxd2016@gmail.com>",
 	"license": "MIT",
-	"funding": "https://github.com/sponsors/estjs",
-	"homepage": "https://github.com/estjs/@estjs/eslint-configc#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/estjs/@estjs/eslint-config.git"
-	},
-	"bugs": "https://github.com/estjs/@estjs/eslint-config/issues",
 	"keywords": [
 		"eslint-plugin",
 		"eslint",
@@ -34,12 +27,12 @@
 		"node": ">=14"
 	},
 	"scripts": {
-		"dev": "tsx ./src/index.ts",
+		"dev": "node ./src/index.js",
 		"build": "unbuild",
 		"lint": "eslint ./src",
 		"test": "vitest",
 		"test:watch": "vitest --watch",
-		"release": "pnpm -r run build && bumpp package.json  --no-git-checks --commit --push --tag && pnpm -r publish --access public"
+		"release": "pnpm run build && bumpp package.json  --no-git-checks --commit --push --tag && pnpm publish --access public"
 	},
 	"dependencies": {
 		"@biomejs/biome": "^1.5.2",
