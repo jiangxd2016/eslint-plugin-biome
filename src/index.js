@@ -1,7 +1,7 @@
 import BiomeConfig from '../biome.json';
 import { Biome } from './biome';
 import { generateDifferences, showInvisibles } from './helpers';
-
+const { name, version } = require('./package.json');
 const { INSERT, DELETE, REPLACE } = generateDifferences;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
@@ -23,62 +23,78 @@ function reportDifference(context, difference) {
   });
 }
 let biome;
-export default {
-  name: 'biome',
-  meta: {
-    type: 'layout',
-    fixable: 'code',
-    docs: {
-      description: '',
-      recommended: 'warn',
-    },
-    messages: {
-      [INSERT]: 'Insert `{{ insertText }}`',
-      [DELETE]: 'Delete `{{ deleteText }}`',
-      [REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`',
-    },
-    schema: [],
-  },
-  defaultOptions: [],
-  create(context) {
-    const fileInfoOptions = (context.options[1] && context.options[1].fileInfoOptions) || {};
-    const sourceCode = context.sourceCode ?? context.getSourceCode();
-    const filePath = context.filename ?? context.getFilename();
-    const onDiskFilepath = context.physicalFilename ?? context.getPhysicalFilename();
-    const source = sourceCode.text;
-    return {
-      async Program() {
-        if (!biome) {
-          biome = await Biome.create();
-          biome.applyConfiguration(BiomeConfig);
-        }
-        let content;
-        try {
-          const fromated = biome.formatContent(source, {
-            ...fileInfoOptions,
-            filePath,
-            onDiskFilepath,
-          });
-          content = fromated.content;
-        } catch (err) {
-          if (!(err instanceof SyntaxError)) {
-            throw err;
-          }
-          const message = 'Parsing error: ' + err.message;
-          const error = /** @type {SyntaxError & {codeFrame: string; loc: SourceLocation}} */ (err);
-          context.report({ message, loc: error });
-          return;
-        }
-        if (content == null) {
-          return;
-        }
-        if (source !== content) {
-          const differences = generateDifferences(source, content);
-          for (const difference of differences) {
-            reportDifference(context, difference);
-          }
-        }
+
+
+
+const eslintPluginBiome = {
+  meta: { name, version },
+  configs: {
+    recommended: {
+			plugins: ['@estjs'],
+      rules: {
+        'biome': 'warn',
       },
-    };
+    },
+  },
+  rules: {
+  	biome: {
+			meta: {
+				type: 'layout',
+				fixable: 'code',
+				docs: {
+					description: '',
+					recommended: 'warn',
+				},
+				messages: {
+					[INSERT]: 'Insert `{{ insertText }}`',
+					[DELETE]: 'Delete `{{ deleteText }}`',
+					[REPLACE]: 'Replace `{{ deleteText }}` with `{{ insertText }}`',
+				},
+				schema: [],
+			},
+			create(context) {
+				const fileInfoOptions = (context.options[1] && context.options[1].fileInfoOptions) || {};
+				const sourceCode = context.sourceCode ?? context.getSourceCode();
+				const filePath = context.filename ?? context.getFilename();
+				const onDiskFilepath = context.physicalFilename ?? context.getPhysicalFilename();
+				const source = sourceCode.text;
+				return {
+					async Program() {
+						if (!biome) {
+							biome = await Biome.create();
+							biome.applyConfiguration(BiomeConfig);
+						}
+						let content;
+						try {
+							const fromated = biome.formatContent(source, {
+								...fileInfoOptions,
+								filePath,
+								onDiskFilepath,
+							});
+							content = fromated.content;
+						} catch (err) {
+							if (!(err instanceof SyntaxError)) {
+								throw err;
+							}
+							const message = 'Parsing error: ' + err.message;
+							const error = /** @type {SyntaxError & {codeFrame: string; loc: SourceLocation}} */ (err);
+							context.report({ message, loc: error });
+							return;
+						}
+						if (content == null) {
+							return;
+						}
+						if (source !== content) {
+							const differences = generateDifferences(source, content);
+							for (const difference of differences) {
+								reportDifference(context, difference);
+							}
+						}
+					},
+				};
+			},
+		};
+
   },
 };
+module.exports = eslintPluginBiome;
