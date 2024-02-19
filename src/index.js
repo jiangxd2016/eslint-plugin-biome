@@ -96,4 +96,4 @@ const eslintPluginBiome = {
 		}
   },
 };
-module.exports = eslintPluginBiome;
+export default eslintPluginBiome;
