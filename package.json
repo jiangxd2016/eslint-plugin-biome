@@ -38,7 +38,8 @@
 		"build": "unbuild",
 		"lint": "eslint ./src",
 		"test": "vitest",
-		"test:watch": "vitest --watch"
+		"test:watch": "vitest --watch",
+		"release": "pnpm -r run build && bumpp package.json  --no-git-checks --commit --push --tag && pnpm -r publish --access public"
 	},
 	"dependencies": {
 		"@biomejs/biome": "^1.5.2",
