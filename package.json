@@ -1,7 +1,7 @@
 {
 	"name": "eslint-plugin-biome",
 	"type": "module",
-	"version": "0.9.6",
+	"version": "0.9.7",
 	"description": "",
 	"author": "jiangxd <jiangxd2016@gmail.com>",
 	"license": "MIT",
@@ -30,7 +30,7 @@
 		"dev": "node ./src/index.js",
 		"build": "unbuild",
 		"lint": "eslint ./src",
-	  "test": "vitest",
+		"test": "vitest",
 		"test:watch": "vitest --watch",
 		"release": "pnpm run build && bumpp package.json  --no-git-checks --commit --push --tag && pnpm publish --access public"
 	},
