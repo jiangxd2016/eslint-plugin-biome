@@ -3,7 +3,7 @@ import { loadModule, wrapError } from './wasm';
 function isFormatContentDebug(options) {
   return 'debug' in options && options.debug !== undefined;
 }
-export class Biome {
+export default class Biome {
   module;
   workspace;
   constructor(module, workspace) {

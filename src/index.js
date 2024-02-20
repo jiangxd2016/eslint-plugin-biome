@@ -1,5 +1,5 @@
 import BiomeConfig from '../biome.json';
-import { Biome } from './biome';
+import Biome from './biome';
 import { generateDifferences, showInvisibles } from './helpers';
 
 import {name,version} from "../package.json"
