@@ -25,15 +25,13 @@ function reportDifference(context, difference) {
 }
 let biome;
 
-
-
 const eslintPluginBiome = {
   meta: { name, version },
   configs: {
     recommended: {
-			plugins: ['@estjs'],
+			plugins: ['biome'],
       rules: {
-        'biome': 'warn',
+        'biome/biome': 'warn',
       },
     },
   },
