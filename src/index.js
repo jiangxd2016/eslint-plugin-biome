@@ -1,7 +1,8 @@
 import BiomeConfig from '../biome.json';
 import { Biome } from './biome';
 import { generateDifferences, showInvisibles } from './helpers';
-const { name, version } = require('./package.json');
+
+import {name,version} from "../package.json"
 const { INSERT, DELETE, REPLACE } = generateDifferences;
 function reportDifference(context, difference) {
   const { operation, offset, deleteText = '', insertText = '' } = difference;
