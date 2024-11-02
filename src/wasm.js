@@ -14,6 +14,7 @@ class WasmError extends Error {
    * It might be useful, but the first like of the stack trace contains the error
    */
   stackTrace;
+  // eslint-disable-next-line unicorn/custom-error-definition
   constructor(stackTrace) {
     super();
     this.stackTrace = stackTrace;
