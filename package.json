@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-biome",
-  "version": "0.9.14",
+  "version": "0.9.15-beta.1",
   "description": "",
   "type": "module",
   "keywords": [
